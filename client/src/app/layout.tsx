@@ -1,6 +1,15 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans } from "next/font/google";
+import React from "react";
 import "./globals.css";
+import Providers from "./providers";
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-dm-sans",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,11 +33,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${dmSans.className}`}>
+        <Providers> 
+
         {children}
-      </body>
+
+        </Providers>
+        </body>
     </html>
   );
 }
