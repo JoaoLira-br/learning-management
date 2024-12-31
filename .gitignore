@@ -47,4 +47,15 @@ next-env.d.ts
 
 # diary
 diary.md
+
 /asset-download
+
+
+# server runs
+/run
+
+# misc
+*.code-workspace
+dynamodb-local-metadata.json
+*.zip
+

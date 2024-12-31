@@ -144,7 +144,7 @@ input[type="color"] {
 
 /* Search Page */
 .search {
-  @apply flex flex-col bg-background text-foreground h-full mx-auto w-3/4;
+  @apply flex flex-col bg-[#1b1c22] text-background h-full mx-auto w-3/4;
 }
 
 .search__title {
@@ -1101,7 +1101,8 @@ input[type="color"] {
 
 /* Loading */
 .loading {
-  @apply fixed inset-0 flex gap-2 items-center justify-center bg-background/50;
+  /* removed bg-background/50 was causing greyish background */
+  @apply fixed inset-0 flex gap-2 items-center justify-center ;
 }
 
 .loading__spinner {
