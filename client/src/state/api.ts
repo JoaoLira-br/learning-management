@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {BaseQueryApi, FetchArgs} from '@reduxjs/toolkit/query';
-
+import { useUpdateCourseMutation } from "../../../asset-download/client/state/api";
+import { User } from '@clerk/nextjs/server';
 
 
 const customBaseQuery = async (
@@ -26,6 +27,15 @@ export const api = createApi({
   // tagTypes; represent the data we receive from backend: important for validation
   tagTypes: ["Courses"],
   endpoints: (build) => ({
+    updateUser: build.mutation<User, Partial<User> & {userId: string}>({
+      query: ({userId, ...updateUser }) => ({
+
+        url: `users/clerk/${userId}`,
+        method: "PUT",
+        body: updateUser
+      }),
+      invalidatesTags: ["Users"]
+    }),
     // this is a function from RTK library from Redux Toolkit
     getCourses: build.query<Course[], {category?: string}>({
       query: ({ category }) => ({
@@ -52,5 +62,6 @@ export const api = createApi({
 export const {
   // export getCourses() format
   useGetCoursesQuery,
-  useGetCourseQuery
+  useGetCourseQuery,
+  useUpdateUserMutation
 } = api;
