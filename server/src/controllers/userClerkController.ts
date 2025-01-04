@@ -11,7 +11,8 @@ export const updateUser = async (
       // request params comes from the url params
 
     try {
-    await clerkClient.users.updateUserMetadata(userId, {
+
+     const user = await clerkClient.users.updateUserMetadata(userId, {
         publicMetadata: {
             userType: userData.publicMetadata.userType,
             settings: userData.publicMetadata.settings
@@ -19,7 +20,7 @@ export const updateUser = async (
     })
       // looks for all courses if no category is provided
 
-      // res.json({ message: "Courses fetched successfully" });
+      res.json({ message: "User updated successfully", data: user });
     } catch (error) {
       res.status(500).json({ message: "Error updating user", error });
     }

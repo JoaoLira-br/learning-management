@@ -1,5 +1,5 @@
 import { Clerk } from '@clerk/clerk-js';
-
+import { Request, Response, NextFunction } from "express";
 import express from 'express';
 import dotenv from 'dotenv'
 import bodyParser from 'body-parser';
@@ -8,8 +8,9 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import * as dynamoose from 'dynamoose';
 import courseRoutes from './routes/courseRoutes';
-import { createClerkClient } from '@clerk/express';
+import { clerkMiddleware, createClerkClient, requireAuth } from '@clerk/express';
 import userClerkRoutes from './routes/userClerkRoutes';
+import transactionRoutes from './routes/transactionRoutes';
 dotenv.config();
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -23,6 +24,7 @@ export const clerkClient = createClerkClient({
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(clerkMiddleware());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({policy: "cross-origin"}))
 app.use(morgan('common'));
@@ -34,7 +36,9 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 app.use("/courses", courseRoutes )
-app.use("/users/clerk", userClerkRoutes)
+app.use("/users/clerk", requireAuth(), userClerkRoutes)
+
+app.use("/transactions", transactionRoutes)
 // SERVER
 const port = process.env.PORT || 3000;
 if(!isProduction) {

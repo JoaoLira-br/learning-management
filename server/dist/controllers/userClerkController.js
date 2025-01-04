@@ -16,14 +16,14 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const userData = req.body;
     // request params comes from the url params
     try {
-        yield index_1.clerkClient.users.updateUserMetadata(userId, {
+        const user = yield index_1.clerkClient.users.updateUserMetadata(userId, {
             publicMetadata: {
                 userType: userData.publicMetadata.userType,
                 settings: userData.publicMetadata.settings
             }
         });
         // looks for all courses if no category is provided
-        // res.json({ message: "Courses fetched successfully" });
+        res.json({ message: "User updated successfully", data: user });
     }
     catch (error) {
         res.status(500).json({ message: "Error updating user", error });

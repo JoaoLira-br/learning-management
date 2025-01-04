@@ -67,7 +67,7 @@ export const CustomFormField: React.FC<FormFieldProps> = ({
   options,
   accept,
   className,
-  inputClassName,
+  inputClassName, 
   labelClassName,
   disabled = false,
   multiple = false,
