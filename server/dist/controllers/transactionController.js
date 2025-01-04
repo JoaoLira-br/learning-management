@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createTransaction = exports.createStripePaymentIntent = void 0;
+exports.createTransaction = exports.createStripePaymentIntent = exports.listTransactions = void 0;
 const stripe_1 = __importDefault(require("stripe"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const courseModel_1 = __importDefault(require("../models/courseModel"));
@@ -23,6 +23,22 @@ if (!process.env.STRIPE_SECRET_KEY) {
     throw new Error("Stripe Secret Key not found");
 }
 const stripe = new stripe_1.default(process.env.STRIPE_SECRET_KEY);
+const listTransactions = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = req.query;
+    try {
+        const transactions = userId
+            ? yield transactionModel_1.default.query("userId").eq(userId).exec()
+            : yield transactionModel_1.default.scan().exec();
+        res.json({
+            message: "Transactions fetched successfully",
+            data: transactions,
+        });
+    }
+    catch (error) {
+        res.status(500).json({ message: "Error fetching transactions", error });
+    }
+});
+exports.listTransactions = listTransactions;
 const createStripePaymentIntent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let { amount } = req.body;
     if (!amount || amount <= 0) {
@@ -61,7 +77,7 @@ const createTransaction = (req, res) => __awaiter(void 0, void 0, void 0, functi
             courseId,
             transactionId,
             amount,
-            paymentProvider
+            paymentProvider,
         });
         yield newTransaction.save();
         // 3. create initial course progress
@@ -74,21 +90,21 @@ const createTransaction = (req, res) => __awaiter(void 0, void 0, void 0, functi
                 sectionId: section.sectionId,
                 chapters: section.chapters.map((chapter) => ({
                     chapterId: chapter.chapterId,
-                    completed: false
-                }))
+                    completed: false,
+                })),
             })),
-            lastAccessedTimestamp: new Date().toISOString()
+            lastAccessedTimestamp: new Date().toISOString(),
         });
         yield initialProgress.save();
         yield courseModel_1.default.update({ courseId }, {
-            $ADD: { enrollments: [{ userId }] }
+            $ADD: { enrollments: [{ userId }] },
         });
         res.json({
             message: "Purchased course successfully",
             data: {
                 transaction: newTransaction,
-                progress: initialProgress
-            }
+                progress: initialProgress,
+            },
         });
     }
     catch (error) {
