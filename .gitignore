@@ -11,6 +11,16 @@ node_modules
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+**/node_modules/
+**/dist/
+
+
+.env
+client/.env.local
+client/.env.development
+client/.env.production
+server/.env
+server/.dist
 
 # testing
 /coverage
@@ -28,6 +38,7 @@ client/temptrash.txt
 
 # misc
 .DS_Store
+Thumbs.db
 *.pem
 
 # debug
@@ -59,4 +70,11 @@ diary.md
 *.code-workspace
 dynamodb-local-metadata.json
 *.zip
+client/.next/
 
+
+.vscode/
+
+server/shared-local-instance.db
+server/dynamodb-local-metadata.json
+shared-local-instance.db
