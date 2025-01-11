@@ -19,6 +19,7 @@ node_modules
 /.next/
 .next/
 
+client/temptrash.txt
 
 /out/
 

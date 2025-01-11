@@ -8,9 +8,13 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import * as dynamoose from 'dynamoose';
 import courseRoutes from './routes/courseRoutes';
+import serverless from 'serverless-http';
 import { clerkMiddleware, createClerkClient, requireAuth } from '@clerk/express';
 import userClerkRoutes from './routes/userClerkRoutes';
 import transactionRoutes from './routes/transactionRoutes';
+import UserCourseProgress from './models/userCourseProgressModel';
+import userCourseProgressRoutes from './routes/userCourseProgressRoutes';
+import seed from './seed/seedDynamodb';
 dotenv.config();
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -39,10 +43,26 @@ app.use("/courses", courseRoutes )
 app.use("/users/clerk", requireAuth(), userClerkRoutes)
 
 app.use("/transactions", transactionRoutes)
+app.use("/users/course-progress",userCourseProgressRoutes)
 // SERVER
 const port = process.env.PORT || 3000;
 if(!isProduction) {
     app.listen(port, () => {
         console.log(`Server is running on http://localhost:${port}`);
     });
+}
+
+// aws production environment
+const serverlessApp = serverless(app);
+export const handler = async (event: any, context: any) => {
+    if(event.action === "seed"){
+        await seed();
+        return {
+            statusCode: 200,
+            body: JSON.stringify({message: "Data seeded successfully"})
+        }
+
+    }else{
+        return serverlessApp(event, context);
+    }
 }
