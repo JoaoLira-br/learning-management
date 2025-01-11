@@ -169,7 +169,7 @@ const getUploadVideoUrl = (req, res) => __awaiter(void 0, void 0, void 0, functi
             Expires: 60,
             ContentType: fileType,
         };
-        // this generates a signed url that can be used to upload the video file in the frontend, which is essential since the api gateway will reject videos over 10mb
+        // this generates a signed url that can be used to upload the video file in the frontend
         const uploadUrl = s3.getSignedUrl("putObject", s3Params);
         // this is the url that will be used to access the video file after it has been uploaded
         const videoUrl = `${process.env.CLOUDFRONT_DOMAIN}/videos/${uniqueId}/${fileName}`;
