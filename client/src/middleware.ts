@@ -1,13 +1,13 @@
-import { ServerComponentsServerModuleTypes } from "./../node_modules/@clerk/nextjs/dist/types/components.server.d";
+
 import {
-  auth,
+  // auth,
   clerkMiddleware,
   createRouteMatcher,
 } from "@clerk/nextjs/server";
-import exp from "constants";
+
 
 import { NextResponse } from "next/server";
-import { metadata } from "./app/layout";
+// import { metadata } from "./app/layout";
 
 const isStudentRoute = createRouteMatcher(["/user/(.*)"]);
 const isTeacherRoute = createRouteMatcher(["/teacher/(.*)"]);

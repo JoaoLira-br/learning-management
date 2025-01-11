@@ -717,6 +717,10 @@ input[type="color"] {
 .course__instructor-bio {
   @apply text-sm;
 }
+.course__instructor-title,
+.course__instructor-bio {
+  @apply text-white-50;
+}
 
 /* Chapters Sidebar */
 .chapters-sidebar {
@@ -1007,7 +1011,7 @@ input[type="color"] {
 }
 
 .course-card__title {
-  @apply text-md lg:text-lg font-semibold line-clamp-2;
+  @apply text-md lg:text-lg font-semibold text-white-50 line-clamp-2;
 }
 
 .course-card__footer {

@@ -10,6 +10,7 @@ interface InitialStateTypes {
   };
 }
 
+// allows us to define the shape of the data that will be stored in the global state, otherwise the local state will get cluttered
 const initialState: InitialStateTypes = {
   courseEditor: {
     sections: [],
@@ -23,6 +24,7 @@ const initialState: InitialStateTypes = {
 export const globalSlice = createSlice({
   name: "global",
   initialState,
+  // reducers are functions that modify the state
   reducers: {
     setSections: (state, action: PayloadAction<Section[]>) => {
       state.courseEditor.sections = action.payload;
@@ -67,6 +69,7 @@ export const globalSlice = createSlice({
         action.payload.section;
     },
     deleteSection: (state, action: PayloadAction<number>) => {
+      // removes 1 element at index action.payload from the array
       state.courseEditor.sections.splice(action.payload, 1);
     },
 

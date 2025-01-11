@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 
 const SignUpComponent = () => {
   const { user } = useUser();
-  console.log("user:", user);
+  // console.log("user:", user);
   const searchParams = useSearchParams();
   const isCheckoutPage = searchParams.get("showSignUp") !== null;
   const courseId = searchParams.get("id");

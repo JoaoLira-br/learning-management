@@ -40,11 +40,13 @@ const LoadingSkeleton = () => {
 const Landing = () => {
   const router = useRouter();
   const currentImage = useCarousel({ totalImages: 3 });
-  const { data: courses, isLoading, isError } = useGetCoursesQuery({})
+  const { data: courses, isLoading} = useGetCoursesQuery({})
   const handleCourseClick = (courseId: string) => {
-    router.push(`/search?id=${courseId}`)
+    router.push(`/search?id=${courseId}`,
+      {scroll: false}
+    )
   }
-  console.log("courses", courses);
+  // console.log("courses", courses);
   if(isLoading) return <LoadingSkeleton />
   return (
     <motion.div
@@ -67,7 +69,7 @@ const Landing = () => {
             similique officia omnis.
           </p>
           <div className="landing__cta">
-            <Link href="/search">
+            <Link href="/search" scroll={false}>
               <div className="landing__cta-button">Search for Courses</div>
             </Link>
           </div>

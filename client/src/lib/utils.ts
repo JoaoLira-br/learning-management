@@ -1,7 +1,8 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import * as z from "zod";
-import { api } from "../../../asset-download/client/state/api";
+
+import { toast } from "sonner";
 // import { toast } from "sonner";
 
 export function cn(...inputs: ClassValue[]) {
@@ -312,6 +313,9 @@ export const createCourseFormData = (
   return formData;
 };
 
+/*
+this function is used to upload all videos in a course, so we check all chapters in all sections
+**/
 export const uploadAllVideos = async (
   localSections: Section[],
   courseId: string,
@@ -349,6 +353,9 @@ export const uploadAllVideos = async (
   return updatedSections;
 };
 
+/*
+this function is used to upload the video to aws once we get the signed url
+**/
 async function uploadVideo(
   chapter: Chapter,
   courseId: string,
@@ -377,6 +384,7 @@ async function uploadVideo(
       `Video uploaded successfully for chapter ${chapter.chapterId}`
     );
 
+    // this is th videoUrl where we can actually access the video
     return { ...chapter, video: videoUrl };
   } catch (error) {
     console.error(

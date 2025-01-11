@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import CourseCardSearch from "@/components/CourseCardSearch";
-import { courseCategories } from '../../../lib/utils';
+
 import SelectedCourse from "./SelectedCourse";
 
 
@@ -38,7 +38,8 @@ const Search = () => {
     });
   };
   const handleEnrollNow = (courseId: string) => {
-    router.push(`/checkout?step=1&id=${courseId}&showSignUp=false`)
+    router.push(`/checkout?step=1&id=${courseId}&showSignUp=false`),
+    {scroll: false}
   }
 
 
