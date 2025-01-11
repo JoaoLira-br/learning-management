@@ -1,10 +1,10 @@
 # Use the AWS Lambda Node.js 20 base image
 FROM public.ecr.aws/lambda/nodejs:20 AS build
 
-# Set the working directory
+# Set the working directory: in docker /app is the default directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package.json and package-lock.json for dependency installation
 COPY package*.json ./
 
 # Install dependencies (including dev dependencies for building)
@@ -16,7 +16,7 @@ COPY . .
 # Build TypeScript files
 RUN npm run build
 
-# Remove dev dependencies
+# Remove dev dependencies: which are not needed in the production image
 RUN npm prune --production
 
 # Use a second stage to prepare the production image

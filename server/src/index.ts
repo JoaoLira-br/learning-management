@@ -55,6 +55,7 @@ if(!isProduction) {
 // aws production environment
 const serverlessApp = serverless(app);
 export const handler = async (event: any, context: any) => {
+    // this is function called by lambda
     if(event.action === "seed"){
         await seed();
         return {

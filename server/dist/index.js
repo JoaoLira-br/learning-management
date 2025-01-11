@@ -95,6 +95,7 @@ if (!isProduction) {
 // aws production environment
 const serverlessApp = (0, serverless_http_1.default)(app);
 const handler = (event, context) => __awaiter(void 0, void 0, void 0, function* () {
+    // this is function called by lambda
     if (event.action === "seed") {
         yield (0, seedDynamodb_1.default)();
         return {
