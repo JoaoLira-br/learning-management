@@ -30,10 +30,10 @@ if (!isProduction) {
     dynamoose_1.default.aws.ddb.local();
     client = new client_dynamodb_1.DynamoDBClient({
         endpoint: "http://localhost:8000",
-        region: "us-east-1",
+        region: "us-east-2",
         credentials: {
-            accessKeyId: "AKIAYXWBN763DNUGR55K",
-            secretAccessKey: "6jmqjKRETDMw0WDfkP0246zYWNWTdO0f4s04F8iL",
+            accessKeyId: "dummyKey123",
+            secretAccessKey: "dummyKey123",
         },
     });
 }
