@@ -55,7 +55,7 @@ if(!isProduction) {
 // aws production environment
 const serverlessApp = serverless(app);
 export const handler = async (event: any, context: any) => {
-    // this is function called by lambda
+    // this is function called by lambda: not the production way to do it: anyone can reseed our database, only temp
     if(event.action === "seed"){
         await seed();
         return {
