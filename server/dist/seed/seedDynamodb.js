@@ -26,22 +26,10 @@ dotenv_1.default.config();
 let client;
 /* DynamoDB Configuration */
 const isProduction = process.env.NODE_ENV === "production";
-if (!isProduction) {
-    dynamoose_1.default.aws.ddb.local();
-    client = new client_dynamodb_1.DynamoDBClient({
-        endpoint: "http://localhost:8000",
-        region: "us-east-2",
-        credentials: {
-            accessKeyId: "dummyKey123",
-            secretAccessKey: "dummyKey123",
-        },
-    });
-}
-else {
-    client = new client_dynamodb_1.DynamoDBClient({
-        region: process.env.AWS_REGION || "us-east-2",
-    });
-}
+console.log(isProduction);
+client = new client_dynamodb_1.DynamoDBClient({
+    region: process.env.AWS_REGION || "us-east-2",
+});
 /* DynamoDB Suppress Tag Warnings */
 const originalWarn = console.warn.bind(console);
 console.warn = (message, ...args) => {
