@@ -63,6 +63,11 @@ const seedDynamodb_1 = __importDefault(require("./seed/seedDynamodb"));
 dotenv_1.default.config();
 const isProduction = process.env.NODE_ENV === 'production';
 if (isProduction) {
+    // Use AWS-managed DynamoDB in production
+    dynamoose.aws.ddb();
+}
+else {
+    // Use local DynamoDB for development
     dynamoose.aws.ddb.local();
 }
 exports.clerkClient = (0, express_2.createClerkClient)({
@@ -97,6 +102,7 @@ const serverlessApp = (0, serverless_http_1.default)(app);
 const handler = (event, context) => __awaiter(void 0, void 0, void 0, function* () {
     // this is function called by lambda
     if (event.action === "seed") {
+        console.log(`pimba seed`);
         yield (0, seedDynamodb_1.default)();
         return {
             statusCode: 200,

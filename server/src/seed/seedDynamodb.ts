@@ -23,11 +23,12 @@ console.log(isProduction);
 
   client = new DynamoDBClient({
     region: process.env.AWS_REGION || "us-east-2",
+    
   });
 
 
 /* DynamoDB Suppress Tag Warnings */
-const originalWarn = console.warn.bind(console);
+const originalWarn = console.warn.  bind(console);
 console.warn = (message, ...args) => {
   if (
     !message.includes("Tagging is not currently supported in DynamoDB Local")

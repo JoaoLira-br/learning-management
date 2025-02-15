@@ -19,9 +19,14 @@ dotenv.config();
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-if(isProduction) {
+if (isProduction) {
+    // Use AWS-managed DynamoDB in production
+    dynamoose.aws.ddb();
+} else {
+    // Use local DynamoDB for development
     dynamoose.aws.ddb.local();
 }
+
 export const clerkClient = createClerkClient({
     secretKey: process.env.CLERK_SECRET_KEY,
 })
@@ -57,6 +62,7 @@ const serverlessApp = serverless(app);
 export const handler = async (event: any, context: any) => {
     // this is function called by lambda
     if(event.action === "seed"){
+        console.log(`pimba seed`)
         await seed();
         return {
             statusCode: 200,
